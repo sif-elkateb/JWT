@@ -1,10 +1,12 @@
 const jwt=require('jsonwebtoken');
 
+const {unauthenticatedError}=require('../errors');
+
 const authenticateMiddleware=(req,res,next)=>{
     const {authorization}=req.headers;
     // console.log(authorization);
     if(!authorization||!authorization.startsWith('Bearer ')){
-        throw new customError('the authentication token must be provided',401);
+        throw new unauthenticatedError('the authentication token must be provided');
     }
     const token=authorization.split(' ')[1];
     try{
@@ -15,7 +17,7 @@ const authenticateMiddleware=(req,res,next)=>{
     }
     catch(err){
         // console.log(err);
-        throw new customError('invalid token',401);
+        throw new unauthenticatedError('invalid token');
     }
 
 }

@@ -1,10 +1,10 @@
 
+const {badRequestError}=require('../errors');
 
-const customError=require('../errors/customError');
 const loginUser=async(req,res)=>{
     const {username,password}=req.body;
     if(!username || !password){
-        throw new customError('both username and password must be provided',400);
+        throw new badRequestError('both username and password must be provided');
         }
     const token=jwt.sign({username},process.env.SECRET,{expiresIn:'30d'});
     res.status(200).json({token})
