@@ -1,10 +1,21 @@
+
+
+const customError=require('../errors/customError');
 const loginUser=async(req,res)=>{
-    res.status(200).send('welcome fuckin user');
+    const {username,password}=req.body;
+    if(!username || !password){
+        throw new customError('both username and password must be provided',400);
+        }
+    const token=jwt.sign({username},process.env.SECRET,{expiresIn:'30d'});
+    res.status(200).json({token})
+    
+
 
 }
 
 const getDashboard=async(req,res)=>{
-    res.status(200).send('welcome to the fuckin dashboard');
+    const randomNumber=Math.floor(Math.random()*100);
+    res.status(200).json({msg:`hello ${req.username} you randomNumber is ${randomNumber}`});
 }
 
 
